@@ -145,7 +145,17 @@
             "optional": false
           }
         },
-        "relationships": {}
+        "relationships": {
+          "balance": {
+            "sourceField": [
+              "address"
+            ],
+            "destField": [
+              "address"
+            ],
+            "destSchema": "balance"
+          }
+        }
       }
     }
   }

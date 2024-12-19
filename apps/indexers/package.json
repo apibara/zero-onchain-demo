@@ -14,9 +14,13 @@
     "@apibara/indexer": "2.0.0-beta.26",
     "@apibara/protocol": "2.0.0-beta.26",
     "@apibara/starknet": "2.0.0-beta.26",
+    "@rocicorp/zero": "^0.9.2024121900",
     "@zero-onchain/schema": "workspace:*",
     "apibara": "2.0.0-beta.26",
     "starknet": "^6.11.0",
     "viem": "^2.21.55"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.2"
   }
 }
