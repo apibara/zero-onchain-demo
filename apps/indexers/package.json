@@ -1,0 +1,22 @@
+{
+  "name": "@zero-onchain/indexers",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "apibara dev",
+    "build": "apibara build",
+    "start": "apibara start"
+  },
+  "keywords": [],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@apibara/indexer": "2.0.0-beta.26",
+    "@apibara/protocol": "2.0.0-beta.26",
+    "@apibara/starknet": "2.0.0-beta.26",
+    "@zero-onchain/schema": "workspace:*",
+    "apibara": "2.0.0-beta.26",
+    "starknet": "^6.11.0",
+    "viem": "^2.21.55"
+  }
+}
