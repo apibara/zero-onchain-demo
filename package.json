@@ -1,0 +1,14 @@
+{
+  "name": "zero-onchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "dev:zero-cache": "pnpm -r dev:zero-cache",
+    "build": "pnpm -r build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0"
+}

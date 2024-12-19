@@ -1,0 +1,152 @@
+{
+  "permissions": {
+    "balance": {
+      "row": {
+        "update": {},
+        "delete": []
+      }
+    },
+    "transfer": {
+      "row": {
+        "update": {
+          "preMutation": []
+        },
+        "delete": []
+      }
+    },
+    "watchedAddress": {
+      "row": {
+        "update": {
+          "preMutation": [
+            [
+              "allow",
+              {
+                "type": "simple",
+                "left": {
+                  "type": "column",
+                  "name": "userId"
+                },
+                "right": {
+                  "type": "static",
+                  "anchor": "authData",
+                  "field": "userId"
+                },
+                "op": "="
+              }
+            ]
+          ]
+        },
+        "delete": [
+          [
+            "allow",
+            {
+              "type": "simple",
+              "left": {
+                "type": "column",
+                "name": "userId"
+              },
+              "right": {
+                "type": "static",
+                "anchor": "authData",
+                "field": "userId"
+              },
+              "op": "="
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "schema": {
+    "version": 1,
+    "tables": {
+      "balance": {
+        "tableName": "balance",
+        "primaryKey": [
+          "address"
+        ],
+        "columns": {
+          "address": {
+            "type": "string",
+            "optional": false
+          },
+          "balance": {
+            "type": "number",
+            "optional": false
+          },
+          "balanceExact": {
+            "type": "string",
+            "optional": false
+          },
+          "lastUpdated": {
+            "type": "number",
+            "optional": false
+          }
+        },
+        "relationships": {}
+      },
+      "transfer": {
+        "tableName": "transfer",
+        "primaryKey": [
+          "id"
+        ],
+        "columns": {
+          "amount": {
+            "type": "number",
+            "optional": false
+          },
+          "amountExact": {
+            "type": "string",
+            "optional": false
+          },
+          "blockNumber": {
+            "type": "number",
+            "optional": false
+          },
+          "blockTimestamp": {
+            "type": "number",
+            "optional": false
+          },
+          "from": {
+            "type": "string",
+            "optional": false
+          },
+          "id": {
+            "type": "string",
+            "optional": false
+          },
+          "to": {
+            "type": "string",
+            "optional": false
+          },
+          "transactionHash": {
+            "type": "string",
+            "optional": false
+          }
+        },
+        "relationships": {}
+      },
+      "watchedAddress": {
+        "tableName": "watchedAddress",
+        "primaryKey": [
+          "id"
+        ],
+        "columns": {
+          "address": {
+            "type": "string",
+            "optional": false
+          },
+          "id": {
+            "type": "string",
+            "optional": false
+          },
+          "userId": {
+            "type": "string",
+            "optional": false
+          }
+        },
+        "relationships": {}
+      }
+    }
+  }
+}
