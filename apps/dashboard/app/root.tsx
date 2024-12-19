@@ -81,8 +81,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        {children}
+      <body className="theme-light">
+        <div className="max-w-[80ch]">
+          {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>

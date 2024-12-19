@@ -1,12 +1,12 @@
 import { StarknetStream } from "@apibara/starknet";
-import { defineIndexer } from "@apibara/indexer";
+import { defineIndexer, useSink } from "@apibara/indexer";
 import { useLogger } from "@apibara/indexer/plugins/logger";
 import { hash } from "starknet";
 import { formatUnits } from "viem";
 import type { Balance, Transfer } from "@zero-onchain/schema";
 import { ApibaraRuntimeConfig } from "apibara/types";
 
-import { createZero } from "@/lib/zero";
+import { createZero, zeroSink } from "@/lib/zero";
 
 const contractAddress = "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d";
 const balanceKey = hash.getSelectorFromName("ERC20_balances");
@@ -21,7 +21,7 @@ export default function (runtimeConfig: ApibaraRuntimeConfig) {
     return defineIndexer(StarknetStream)({
         streamUrl: "https://starknet.preview.apibara.org",
         startingCursor: {
-            orderKey: 900_000n,
+            orderKey: 996_000n,
         },
         filter: {
             events: [{
@@ -32,7 +32,8 @@ export default function (runtimeConfig: ApibaraRuntimeConfig) {
                 contractAddress,
             }],
         },
-        async transform({ block }) {
+        sink: zeroSink({ z }),
+        async transform({ block, context }) {
             const logger = useLogger();
             const { events, header, storageDiffs } = block;
             logger.log(`Block number ${header?.blockNumber}`)
@@ -60,7 +61,7 @@ export default function (runtimeConfig: ApibaraRuntimeConfig) {
                 addAddress(storageToAddress, from);
                 addAddress(storageToAddress, to);
 
-                logger.log(`Event ${event.eventIndex} from=${from} to=${to} amount=${amount}`)
+                logger.debug(`Event ${event.eventIndex} from=${from} to=${to} amount=${amount}`)
 
                 transfers.push({
                     id: `${event.transactionHash}-${event.eventIndex}`,
@@ -87,7 +88,7 @@ export default function (runtimeConfig: ApibaraRuntimeConfig) {
                     }
 
                     const balance = formatUnits(BigInt(entry.value), decimals);
-                    logger.log(`address=${address} balance=${balance}`);
+                    logger.debug(`address=${address} balance=${balance}`);
 
                     balances.push({
                         address,
@@ -96,6 +97,18 @@ export default function (runtimeConfig: ApibaraRuntimeConfig) {
                         balanceExact: balance,
                     });
                 }
+            }
+
+            const z = useSink({ context });
+
+            for (const balance of balances) {
+                // @ts-ignore
+                z.balance.upsert(balance);
+            }
+
+            for (const transfer of transfers) {
+                // @ts-ignore
+                z.transfer.insert(transfer);
             }
         },
     });

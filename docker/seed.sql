@@ -7,7 +7,7 @@ CREATE DATABASE zonchain_cdb;
 CREATE TABLE "balance" (
     "address" TEXT PRIMARY KEY,
     "lastUpdated" TIMESTAMP NOT NULL,
-    "balance" INTEGER NOT NULL,
+    "balance" NUMERIC NOT NULL,
     "balanceExact" TEXT NOT NULL
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE "transfer" (
     "id" TEXT PRIMARY KEY,
     "from" TEXT NOT NULL,
     "to" TEXT NOT NULL,
-    "amount" INTEGER NOT NULL,
+    "amount" NUMERIC NOT NULL,
     "amountExact" TEXT NOT NULL,
     "transactionHash" TEXT NOT NULL,
     "blockNumber" INTEGER NOT NULL,
